@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#202b3d"><link rel="manifest" href="./manifest.json"><link rel="stylesheet" href="./style.css">
+<title>けれけれ記録</title>
+</head>
+<body>
+<header class="topbar"><div><div class="brand">けれけれ記録</div><div class="subtitle">放送アーカイブ</div></div><button class="iconbtn" id="settingsBtn" title="表示設定">⚙</button></header>
+<nav class="tabs"><button class="tab active" data-view="list">放送一覧</button><button class="tab" data-view="table">データ表</button></nav>
+<main>
+<section id="listView" class="view active">
+<div class="toolbar"><input id="search" placeholder="テーマ・コーナー・曲・名言を検索"><button class="primary" id="addBtn">＋ 回を追加</button></div>
+<div class="summary"><span id="episodeCount">0回</span><span>登録放送</span></div><div id="episodeCards" class="cards"></div>
+</section>
+<section id="tableView" class="view">
+<div class="tableTools"><input id="tableSearch" placeholder="表内検索"><button id="tableSortBtn" class="secondary">↕ 並び替え</button><button id="tableColumnBtn" class="secondary">☷ 項目順</button></div>
+<div class="tableHint">放送回は縦に増えます。項目は横方向にスクロールできます。</div>
+<div class="tableWrap"><table id="episodeTable"><thead><tr id="tableHead"></tr></thead><tbody id="tableBody"></tbody></table></div>
+</section>
+</main>
+<footer class="footer"><button id="importRadiko" class="secondary">radiko情報を取り込む</button><button id="backupBtn" class="secondary">バックアップ</button><button id="restoreBtn" class="secondary">復元</button><input type="file" id="restoreFile" accept="application/json" hidden></footer>
+<div id="episodeModal" class="modal"><div class="modalPanel"><div class="modalHeader"><h2 id="modalTitle">放送回を追加</h2><button class="iconbtn closeModal">✕</button></div><form id="episodeForm">
+<label>放送回<input id="epNumber" type="number" min="1" required placeholder="例：100"></label>
+<label>放送日<input id="airDate" type="date"></label><label>締切日<input id="deadline" type="date"></label>
+<label>トークテーマ<textarea id="theme" rows="2"></textarea></label><label>やったコーナー <span class="help">複数ある場合は改行で区切る</span><textarea id="corners" rows="3"></textarea></label>
+<label>流した曲 <span class="help">複数ある場合は改行で区切る</span><textarea id="songs" rows="3"></textarea></label><label>名言 <span class="help">複数ある場合は改行で区切る</span><textarea id="quotes" rows="3"></textarea></label>
+<div class="formButtons"><button type="button" class="secondary closeModal">キャンセル</button><button type="submit" class="primary">保存</button></div></form></div></div>
+<div id="settingsModal" class="modal"><div class="modalPanel"><div class="modalHeader"><h2>表示設定</h2><button class="iconbtn closeSettings">✕</button></div>
+<label>文字サイズ<select id="fontSetting"><option value="small">小</option><option value="normal">標準</option><option value="large">大</option><option value="xlarge">特大</option></select></label>
+<label>行の高さ<select id="rowHeight"><option value="compact">コンパクト</option><option value="normal">標準</option><option value="spacious">ゆったり</option></select></label>
+<label>セル内の文字<select id="wrapSetting"><option value="wrap">折り返して表示</option><option value="nowrap">1行表示</option></select></label>
+<label>一覧の順序<select id="sortSetting"><option value="episodeAsc">放送回：古い順</option><option value="episodeDesc">放送回：新しい順</option><option value="airAsc">放送日：古い順</option><option value="airDesc">放送日：新しい順</option><option value="deadlineAsc">締切日：古い順</option><option value="deadlineDesc">締切日：新しい順</option></select></label>
+<div class="formButtons"><button class="primary closeSettings">閉じる</button></div></div></div>
+<div id="sortModal" class="modal"><div class="modalPanel"><div class="modalHeader"><h2>表の並び替え</h2><button class="iconbtn closeSort">✕</button></div><label>基準<select id="sortField"><option value="episode">放送回</option><option value="airDate">放送日</option><option value="deadline">締切日</option><option value="theme">トークテーマ</option></select></label><label>順序<select id="sortDirection"><option value="asc">昇順（古い・小さい順）</option><option value="desc">降順（新しい・大きい順）</option></select></label><div class="formButtons"><button class="primary closeSort">適用</button></div></div></div>
+<div id="columnsModal" class="modal"><div class="modalPanel"><div class="modalHeader"><h2>表の項目順</h2><button class="iconbtn closeColumns">✕</button></div><p class="help">↑↓で列の順番を変更します。放送回は固定です。</p><div id="columnOrderList"></div><div class="formButtons"><button class="primary closeColumns">完了</button></div></div></div>
+<div id="radikoModal" class="modal"><div class="modalPanel"><div class="modalHeader"><h2>radiko情報の取り込み</h2><button class="iconbtn closeRadiko">✕</button></div><p>radiko podcastのエピソードURLや、取得したデータを貼り付けて取り込みできます。自動取得はradiko側の公開仕様・アクセス制限に左右されるため、まずはURLや説明文を貼り付ける方式にしています。</p><label>エピソードURLまたは説明文<textarea id="radikoInput" rows="5" placeholder="radikoのエピソードURLや説明文を貼り付け"></textarea></label><div class="formButtons"><button class="secondary closeRadiko">キャンセル</button><button id="parseRadiko" class="primary">内容を解析</button></div><div id="radikoResult" class="help"></div></div></div>
+<script src="./app.js"></script>
+</body></html>
